@@ -1,6 +1,11 @@
 let lastRenderTime = 0;
+let gameOver = false;
 const gameBoard = document.getElementById("game-board");
+
 const main = (currentTime) => {
+    if(gameOver) {
+        return;
+    }
     window.requestAnimationFrame(main);
     const secondsSinceLastRender = (currentTime - lastRenderTime) / 1000;
     if(secondsSinceLastRender < 1 / SNAKE_SPEED) {
@@ -14,10 +19,17 @@ const main = (currentTime) => {
 window.requestAnimationFrame(main);
 
 const update = () => {
+    gameOver = checkGameOver();
     updateSnake();
+    updateFood();
 }
 
 const draw = () => {
     gameBoard.innerHTML = "";
     drawSnake(gameBoard);
+    drawFood(gameBoard);
+}
+
+const checkGameOver = () => {
+    return isSnakeOutofBounds() || isSnakeIntersect();
 }

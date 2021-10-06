@@ -1,4 +1,4 @@
-const SNAKE_SPEED = 5;
+const SNAKE_SPEED = 6;
 const snakeBody = [
     {x: 11, y: 11},
     {x: 11, y: 10},
@@ -23,4 +23,35 @@ const drawSnake = () => {
         snakeElement.classList.add("snake");
         gameBoard.appendChild(snakeElement);
     }
+}
+
+const onSnake = (position) => {
+    for(let i = 0; i < snakeBody.length; i++){
+        if(equalPositions(position, snakeBody[i])){
+            return true;
+        }
+    }
+    return false;
+}
+
+const equalPositions = (pos1, pos2) => {
+    return pos1.x === pos2.x && pos1.y === pos2.y;
+}
+const expandSnake = (amount) => {
+    for(let i = 0; i < amount; i++) {
+        snakeBody.push({ ...snakeBody[snakeBody.length - 1]});
+    }
+}
+
+isSnakeOutofBounds = () => {
+    return isOutofBounds(snakeBody[0]);
+}
+
+isSnakeIntersect = () => {
+    const snakeHead = snakeBody[0];
+    for(let i = 1; i < snakeBody.length; i++){
+        if(equalPositions(snakeHead, snakeBody[i])){
+            return true;
+        }
+    } return false;
 }
